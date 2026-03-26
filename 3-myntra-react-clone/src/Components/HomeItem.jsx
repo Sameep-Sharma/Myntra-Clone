@@ -1,5 +1,3 @@
-
-
 const HomeItem = ({item}) => {
   return (
     <>
