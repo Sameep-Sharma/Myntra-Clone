@@ -19,17 +19,22 @@ const FetchItems = () => {
     fetch("http://localhost:8080/items", { signal })
       .then((res) => res.json())
       .then(({ items }) => {
-        dispatch(fetchStatuseActions.markFetchDone());
-
-      dispatch(fetchStatuseActions.markFetchingDone());
-        dispatch(itemsActions.addInitialItems(items[0]));
+        dispatch(fetchStatuseActions.MarkFetchDone());
+        dispatch(fetchStatuseActions.markFetchingFinished());
+        dispatch(itemsActions.addInitialItems(items));
+      })
+      .catch((err) => {
+        if(err.name === "AbortError") return;
+        console.log(err);
+        
       });
+
 
     return () => {
     
       controller.abort();
     };
-  }, [fetchStatus]);
+  }, [fetchStatus.fetchDone]);
 
   return (
     <>
